@@ -4,7 +4,7 @@
     
     // Public properties
     var $this = $(this);
-    var __typeout__ = (typeof type == "undefined")?true:type;
+    var __typeout__ = (typeof type === "undefined")?true:type;
     var _requiredText = Array("El campo"," es obligatorio");
     var _requiredMail = "Ingrese un email valido";
     var _requiredZip  = "Ingrese un codigo postal valido";
@@ -16,7 +16,7 @@
 
 
     //Public methods
-    $this.__required__ = function(__val__){return (__val__== "")?false:true;};    
+    $this.__required__ = function(__val__){return (__val__=== "")?false:true;};    
     $this.__email__ = function(__val__){ 
 	var __p__ = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
 	return __p__.test(__val__);
@@ -26,17 +26,17 @@
 
 	switch(__type){
 	    case "equal":
-		  if(parseInt(__size) != parseInt(__val__.length)){
+		  if(parseInt(__size,10) != parseInt(__val__.length,10)){
 		      __return = false;
 		  }
 	    break;
 	    case "max":
-		  if(parseInt(__val__.length) > parseInt(__size)){
+		  if(parseInt(__val__.length,10) > parseInt(__size,10)){
 		      __return = false;
 		  }
 	    break;
 	    case "min":
-		  if(parseInt(__val__.length) < parseInt(__size)){
+		  if(parseInt(__val__.length,10) < parseInt(__size,10)){
 		      __return = false;
 		  }		
 	    break;
@@ -53,7 +53,7 @@
       if (__params__) {
 	var __l  = __params__[0].length;
 	var __param__ = __params__[0].substring(1,__l-1);
-	if( __param__ == ""){
+	if( __param__ === ""){
 	  if(!$this.__required__(__val__)){
 	      $this.__msg__(_requiredText[0]+" "+__e.name+" "+_requiredText[1]);
 	      __return__ = false;
@@ -61,6 +61,8 @@
 	}else{
 	  var data = __param__.split(",");
 	  var __type__ = data[0];
+	  var msj;
+	  var __size;
 	
 	  
 		    switch(__type__){
@@ -128,8 +130,8 @@
       $('[title^=valida]').each(function(){
 	var type = $(this).attr('title');
 	
-	  __return__ = $this.__eval__(type,this) 
-	  if(__return__ == false){
+	  __return__ = $this.__eval__(type,this);
+	  if(__return__ === false){
 	    this.focus();
 	    return false;
 	  }	  
@@ -137,10 +139,10 @@
       });
      
 
-     if(__typeout__ == true){
+     if(__typeout__ === true){
          return __return__;
      }else{
-         if(__return__ == true){
+         if(__return__ === true){
             e.preventDefault();
             if (typeof callback == 'function') { // make sure the callback is a function
                 callback.call(this); // brings the scope to the callback
