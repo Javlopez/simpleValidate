@@ -39,11 +39,11 @@
                   // setting value of return
                   var _return_ = true;
 
-                  $('#' +$idform+ ' [title^='+options.field+']').each(function(){
+                  $('#' + $idform + ' [title^=' + options.field + ']').each(function(){
 
                     var $input = $(this);
                     var $validator = $input.attr('title');
-                        _return_ = $this.__init__($validator,$input);
+                        _return_   = $this.__init__($validator,$input);
                         if(_return_ === false){
                         this.focus();
                         return false;
