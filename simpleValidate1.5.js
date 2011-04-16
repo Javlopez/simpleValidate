@@ -12,15 +12,24 @@
 (function($){
         $.fn.extend({
 
-           simpleValidate: function(options,callback) {
+           simpleValidate: function(options,callback,msg) {
 
                var defaults = {
-                    text: Array("El campo"," es obligatorio"),
+                    text: array("El campo"," es obligatorio"),
                     mail: "Ingrese un email valido",
-                    zip: "Ingrese un codigo postal valido",
-                    min: Array(5,"Ingrese al menos ", "caracteres"),
-                    max: Array(10,"Ingrese maximo", "caracteres"),
-               }
+                     zip: "Ingrese un codigo postal valido",
+                     min: array(5,"Ingrese al menos ", "caracteres"),
+                     max: array(10,"Ingrese maximo", "caracteres"),
+                     msg: function(msg){
+                            alert(msg);
+                        }
+               };
+
+               /*
+                * Extend options with default values
+                */
+               var options = $.extend(defaults, options);
+
            }
         });
 
