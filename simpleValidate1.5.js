@@ -42,7 +42,7 @@
                     $('#' + $idform + ' [title^=' + options.field + ']').each(function(){
                         var $input = $(this);
                         var $validator = $input.attr('title');
-                        _return_   = $this.__init__($validator,$input);
+                        _return_  = $this.__init__($validator,$input);
                         if(_return_ === false){
                             this.focus();
                             return false;
@@ -95,17 +95,37 @@
                                             msg = data[1] || options.email;
                                             _return_ = $this.__email__(_value_,msg);
                                     break;
+                                    
+                                    case "zip":
+                                            msg = data[1] || options.zip;
+                                            _return_ = $this.__length__("equal",5,_value_,msg);
+                                            if(isNaN(_value_)){
+                                                _return_= false;
+                                                options.msg(msg);
+                                            }
+                                    break;
 
+                                    case "minlength":
+                                            var length = (isNaN(data[2]))?options.min[0]:data[2];
+                                            msg = data[1] || options.min[1]+" "+ options.min[2]+ " " +options.min[1];
+                                            _return_ = $this.__length__("min",size,_value_,msg);
+                                    break;
+
+                                    case "maxlength":
+                                        var length = (isNaN(data[2]))?options.max[0]:data[2];
+                                        msg = data[1] || options.max[1]+" "+ options.max[2]+ " " +options.max[1];
+                                        _return_ = $this.__length__("max",size,_value_,msg);
+                                    break;
+
+                                    default:
+                                            msg = options.text[0] + " " + name + " " + options.text[1];
+                                            _return_ = $this.__required__(_value_,msg);
+                                    break;
                                 }
-                                //Other validation
                             }
                         }catch(error){
                             $this.exception(error);
                         }
-                   /**
-                    *
-                    */
-
                    }else{
                        _return_ = true;
                    }
@@ -131,7 +151,31 @@
                     }
                 },
 
-
+                $this.__length__ = function(type,size,value,msg){
+                    //force return boolean value
+                    var _return_ = true;
+                    switch(type){
+                        case "equal":
+                              if(parseInt(size,10) != parseInt(value.length,10)){
+                                  _return_ = false;
+                              }
+                        break;
+                        case "max":
+                              if(parseInt(value.length,10) > parseInt(size,10)){
+                                  _return_ = false;
+                              }
+                        break;
+                        case "min":
+                              if(parseInt(value.length,10) < parseInt(size,10)){
+                                  _return_ = false;
+                              }
+                        break;
+                    }
+                    if(_return_ === false){
+                        options.msg(msg);
+                    }
+            	return _return_;
+                };
                // Use this method for catch and manage exceptions
                 $this.exception = function(e){
                     ////console.log(e);
