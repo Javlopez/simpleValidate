@@ -12,7 +12,7 @@
 (function($){
         $.fn.extend({
 
-           simpleValidate: function(settings,callback,msg) {
+           simpleValidate: function(settings,callback) {
 
                var defaults = {
                     text: Array("El campo"," es obligatorio"),
