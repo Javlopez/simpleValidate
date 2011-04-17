@@ -16,7 +16,7 @@
 
                var defaults = {
                     text: array("El campo"," es obligatorio"),
-                    mail: "Ingrese un email valido",
+                   email: "Ingrese un email valido",
                      zip: "Ingrese un codigo postal valido",
                      min: array(5,"Ingrese al menos ", "caracteres"),
                      max: array(10,"Ingrese maximo", "caracteres"),
@@ -70,15 +70,38 @@
                    if(validator === true){
                         try{
                             var length = validator[0].length;
-                            var type = validator[0].substring(1,length-1);
-                            if(type == ""){
+                            var params = validator[0].substring(1,length-1);
+                            var msg;
+                            if(params == ""){
                                 if(!$this.__required__(_value_)){
-                                    var msg = options.text[0] + " " + name + " " + options.text[1];
+                                    msg = options.text[0] + " " + name + " " + options.text[1];
                                     options.msg(msg);
                                     _return_ = false;
                                 }
                             }else{
-                                
+                                var data = params.split(",");
+                                var type = data[0];
+                                var msj;
+                                var size;
+
+                                switch(type){
+                                    case "required":
+                                        if(!$this.__required__(_value_)){
+                                            msg = options.text[0] + " " + name + " " + options.text[1];
+                                            options.msg(msg);
+                                            _return_ = false;
+                                            }
+                                    break;
+
+                                    case "email":
+                                        if(!$this.__email__(_value_)){
+                                            msg = data[1] || options.email;
+                                            options.msg(msg);
+                                            _return_ = false;
+                                        }
+                                    break;
+
+                                }
                                 //Other validation
                             }
                         }catch(error){
