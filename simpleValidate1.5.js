@@ -85,20 +85,15 @@
                                 var size;
 
                                 switch(type){
+                                    
                                     case "required":
-                                        if(!$this.__required__(_value_)){
                                             msg = options.text[0] + " " + name + " " + options.text[1];
-                                            options.msg(msg);
-                                            _return_ = false;
-                                            }
+                                            _return_ = $this.__required__(_value_,msg);
                                     break;
 
                                     case "email":
-                                        if(!$this.__email__(_value_)){
                                             msg = data[1] || options.email;
-                                            options.msg(msg);
-                                            _return_ = false;
-                                        }
+                                            _return_ = $this.__email__(_value_,msg);
                                     break;
 
                                 }
@@ -118,12 +113,22 @@
                },  //End of constructor __init__
 
                 // Methods of validations
-                $this.__required__ = function(value){
-                    return (value == "")?false:true;
+                $this.__required__ = function(value,msg){
+                    if(value == ""){
+                        options.msg(msg);
+                        return false;
+                    }else{
+                        return true;
+                    }
                 },
-                $this.__email__ = function(value){
+                $this.__email__ = function(value,msg){
                     var patternMail = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
-                    return patternMail.test(value);
+                    if(patternMail.test(value) === false){
+                        options.msg(msg);
+                        return false;
+                    }else{
+                        return true;
+                    }
                 },
 
 
