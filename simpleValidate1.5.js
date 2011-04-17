@@ -20,7 +20,7 @@
                      zip: "Ingrese un codigo postal valido",
                      min: array(5,"Ingrese al menos ", "caracteres"),
                      max: array(10,"Ingrese maximo", "caracteres"),
-                   field: 'svalidate',
+                   field: 'sValidate',
                      msg: function(msg){
                             alert(msg);
                         }
@@ -116,10 +116,17 @@
                    }
                    return _return_;
                },  //End of constructor __init__
-                // Methods of validate
+
+                // Methods of validations
                 $this.__required__ = function(value){
                     return (value == "")?false:true;
                 },
+                $this.__email__ = function(value){
+                    var patternMail = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
+                    return patternMail.test(value);
+                },
+
+
                // Use this method for catch and manage exceptions
                 $this.exception = function(e){
                     ////console.log(e);
