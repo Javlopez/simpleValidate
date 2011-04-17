@@ -63,30 +63,29 @@
                    //Set options
                    var filter = /\[(.*)\]/;
                    var validator = filter.exec(validator);
-                   var value = field.value;
+                   var _value_ = field.value;
                    var _return_ = true;//Force return true;
+                   var name = field.name;
 
                    if(validator === true){
                         try{
                             var length = validator[0].length;
                             var type = validator[0].substring(1,length-1);
                             if(type == ""){
-
+                                if(!$this.__required__(_value_)){
+                                    var msg = options.text[0] + " " + name + " " + options.text[1];
+                                    options.msg(msg);
+                                    _return_ = false;
+                                }
                             }else{
                                 
+                                //Other validation
                             }
                         }catch(error){
                             $this.exception(error);
                         }
                    /**
-                    * var __l  = __params__[0].length;
-	var __param__ = __params__[0].substring(1,__l-1);
-	if( __param__ === ""){
-	  if(!$this.__required__(__val__)){
-	      $this.__msg__(_requiredText[0]+" "+__e.name+" "+_requiredText[1]);
-	      __return__ = false;
-	  }
-	}else{
+                    *
                     */
 
                    }else{
@@ -94,7 +93,10 @@
                    }
                    return _return_;
                },  //End of constructor __init__
-
+                // Methods of validate
+                $this.__required__ = function(value){
+                    return (value == "")?false:true;
+                },
                // Use this method for catch and manage exceptions
                 $this.exception = function(e){
                     ////console.log(e);
