@@ -12,14 +12,14 @@
 (function($){
         $.fn.extend({
 
-           simpleValidate: function(options,callback,msg) {
+           simpleValidate: function(settings,callback,msg) {
 
                var defaults = {
-                    text: array("El campo"," es obligatorio"),
+                    text: Array("El campo"," es obligatorio"),
                    email: "Ingrese un email valido",
                      zip: "Ingrese un codigo postal valido",
-                     min: array(5,"Ingrese al menos ", "caracteres"),
-                     max: array(10,"Ingrese maximo", "caracteres"),
+                     min: Array(5,"Ingrese al menos ", "caracteres"),
+                     max: Array(10,"Ingrese maximo", "caracteres"),
                    field: 'sValidate',
                      msg: function(msg){
                             alert(msg);
@@ -32,7 +32,7 @@
                /*
                 * Extend options with default values
                 */
-               var options = $.extend(defaults, options);
+               var options = $.extend(defaults, settings);
 
                //Trigger of Plugin
                $this.submit(function(form) {
@@ -59,10 +59,10 @@
                });//End of trigger
 
 
-               $this.__init__ = function(validator,field){
+               $this.__init__ = function(_args_,field){
                    //Set options
                    var filter = /\[(.*)\]/;
-                   var validator = filter.exec(validator);
+                   var validator = filter.exec(_args_);
                    var _value_ = field.value;
                    var _return_ = true;//Force return true;
                    var name = field.name;
@@ -72,7 +72,7 @@
                             var length = validator[0].length;
                             var params = validator[0].substring(1,length-1);
                             var msg;
-                            if(params == ""){
+                            if(params === ""){
                                 if(!$this.__required__(_value_)){
                                     msg = options.text[0] + " " + name + " " + options.text[1];
                                     options.msg(msg);
@@ -106,13 +106,13 @@
                                     break;
 
                                     case "minlength":
-                                            var length = (isNaN(data[2]))?options.min[0]:data[2];
+                                            length = (isNaN(data[2]))?options.min[0]:data[2];
                                             msg = data[1] || options.min[1]+" "+ options.min[2]+ " " +options.min[1];
                                             _return_ = $this.__length__("min",size,_value_,msg);
                                     break;
 
                                     case "maxlength":
-                                        var length = (isNaN(data[2]))?options.max[0]:data[2];
+                                            length = (isNaN(data[2]))?options.max[0]:data[2];
                                         msg = data[1] || options.max[1]+" "+ options.max[2]+ " " +options.max[1];
                                         _return_ = $this.__length__("max",size,_value_,msg);
                                     break;
@@ -130,17 +130,18 @@
                        _return_ = true;
                    }
                    return _return_;
-               },  //End of constructor __init__
+               };  //End of constructor __init__
 
                 // Methods of validations
                 $this.__required__ = function(value,msg){
-                    if(value == ""){
+                    if(value === ""){
                         options.msg(msg);
                         return false;
                     }else{
                         return true;
                     }
-                },
+                };
+
                 $this.__email__ = function(value,msg){
                     var patternMail = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
                     if(patternMail.test(value) === false){
@@ -149,7 +150,7 @@
                     }else{
                         return true;
                     }
-                },
+                };
 
                 $this.__length__ = function(type,size,value,msg){
                     //force return boolean value
@@ -174,12 +175,13 @@
                     if(_return_ === false){
                         options.msg(msg);
                     }
-            	return _return_;
+                    return _return_;
                 };
+                
                // Use this method for catch and manage exceptions
                 $this.exception = function(e){
                     ////console.log(e);
-                }
+                };
 
            }
         });
