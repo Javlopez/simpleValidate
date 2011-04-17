@@ -42,13 +42,16 @@
                     $('#' + $idform + ' [title^=' + options.field + ']').each(function(){
                         var $input = $(this);
                         var $validator = $input.attr('title');
-                        _return_  = $this.__init__($validator,$input);
+                        _return_  = $this.__init__($validator,this);
+                        
                         if(_return_ === false){
                             this.focus();
+                            form.preventDefault();
                             return false;
                         }
+                        
                     });//End of filter check input valids
-
+                    
                     if(typeof callback == 'function') { // make sure the callback is a function
                         callback.call(this); // brings the scope to the callback
                         form.preventDefault();
@@ -67,8 +70,8 @@
                    var _return_ = true;//Force return true;
                    var name = field.name;
 
-                   if(validator === true){
-                        try{
+                   if(validator){
+                        //try{
                             var length = validator[0].length;
                             var params = validator[0].substring(1,length-1);
                             var msg;
@@ -113,8 +116,8 @@
 
                                     case "maxlength":
                                             length = (isNaN(data[2]))?options.max[0]:data[2];
-                                        msg = data[1] || options.max[1]+" "+ options.max[2]+ " " +options.max[1];
-                                        _return_ = $this.__length__("max",size,_value_,msg);
+                                            msg = data[1] || options.max[1]+" "+ options.max[2]+ " " +options.max[1];
+                                            _return_ = $this.__length__("max",size,_value_,msg);
                                     break;
 
                                     default:
@@ -123,9 +126,10 @@
                                     break;
                                 }
                             }
-                        }catch(error){
+                        /*}catch(error){
                             $this.exception(error);
-                        }
+                            console.log("Error");
+                        }*/
                    }else{
                        _return_ = true;
                    }
@@ -134,7 +138,7 @@
 
                 // Methods of validations
                 $this.__required__ = function(value,msg){
-                    if(value === ""){
+                    if(value === "" || typeof value == "undefined"){
                         options.msg(msg);
                         return false;
                     }else{
@@ -180,7 +184,7 @@
                 
                // Use this method for catch and manage exceptions
                 $this.exception = function(e){
-                    ////console.log(e);
+                    console.log(e);
                 };
 
            }
