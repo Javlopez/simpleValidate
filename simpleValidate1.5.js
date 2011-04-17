@@ -65,8 +65,40 @@
                    var validator = filter.exec(validator);
                    var value = field.value;
                    var _return_ = true;//Force return true;
-                   
-               }            
+
+                   if(validator === true){
+                        try{
+                            var length = validator[0].length;
+                            var type = validator[0].substring(1,length-1);
+                            if(type == ""){
+
+                            }else{
+                                
+                            }
+                        }catch(error){
+                            $this.exception(error);
+                        }
+                   /**
+                    * var __l  = __params__[0].length;
+	var __param__ = __params__[0].substring(1,__l-1);
+	if( __param__ === ""){
+	  if(!$this.__required__(__val__)){
+	      $this.__msg__(_requiredText[0]+" "+__e.name+" "+_requiredText[1]);
+	      __return__ = false;
+	  }
+	}else{
+                    */
+
+                   }else{
+                       _return_ = true;
+                   }
+                   return _return_;
+               },  //End of constructor __init__
+
+               // Use this method for catch and manage exceptions
+                $this.exception = function(e){
+                    ////console.log(e);
+                }
 
            }
         });
