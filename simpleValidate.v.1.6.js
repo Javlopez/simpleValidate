@@ -9,7 +9,7 @@
  * @version 1.6 beta
  *
  */
-(function($){
+;(function($){
         $.fn.extend({
 
            simpleValidate: function(settings,callback) {
@@ -97,7 +97,7 @@
                                 var size;
                                 var $pattern = $(field).attr("data");
                                 
-                                type = (type == "regex" && (data.length !=2  ||  typeof $pattern=="undefined"))?"required":type;
+                                type = ( type == "regex" && (data.length != 2  ||  typeof $pattern=="undefined") )?"required":type;
                                                                 
                                 switch(type){
 
