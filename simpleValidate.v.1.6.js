@@ -118,7 +118,7 @@
                                     break;
 
                                     case "zip":
-                                            msg = data[1] || options.zip;
+                                            msg = options.zip;
                                             _return_ = $this.__length__("equal",5,_value_,msg);
                                             if(isNaN(_value_)){
                                                 _return_= false;
@@ -127,13 +127,13 @@
                                     break;
 
                                     case "minlength":
-                                            length = (isNaN(data[2]))?options.min[0]:data[2];
+                                            size = (isNaN(data[2]))?options.min[0]:data[2];
                                             msg = data[1] || options.min[1]+" "+ options.min[2]+ " " +options.min[1];
                                             _return_ = $this.__length__("min",size,_value_,msg);
                                     break;
 
                                     case "maxlength":
-                                            length = (isNaN(data[2]))?options.max[0]:data[2];
+                                            size = (isNaN(data[2]))?options.max[0]:data[2];
                                             msg = data[1] || options.max[1]+" "+ options.max[2]+ " " +options.max[1];
                                             _return_ = $this.__length__("max",size,_value_,msg);
                                     break;
