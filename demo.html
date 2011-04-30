@@ -15,7 +15,7 @@
   <body>
       <form action="try.php" method="post" id="testForm">
           <label>Name</label>
-          <input type="text" name="name"  /><hr />
+          <input type="text" name="name" title="valid[required,Ingrese un nombre valido]" /><hr />
           <label>Ingrese una cantidad valida (tipo numero.decimal(2 digitos))</label>
           <input type="text" name="cantidad" title="valid[regex,Por favor ingrese un numero con o sin decimales unicamente]" data="^([0-9]+\.?[0-9]{0,2})$" /><hr />
           <label>Required</label><input type="checkbox"  name="condiciones" value="Required" title="valid[Debes de aceptar los terminos y condiciones]"/>

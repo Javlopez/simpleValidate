@@ -102,7 +102,7 @@
                                 switch(type){
 
                                     case "required":
-                                            msg = options.text[0] + " " + name + " " + options.text[1];
+                                            msg = data[1] || options.text[0] + " " + name + " " + options.text[1];
                                             _return_ = $this.__required__(_value_,msg);
                                     break;
 
